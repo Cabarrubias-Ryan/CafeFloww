@@ -1,0 +1,46 @@
+{
+  "menu": [
+    {
+      "name": "Menu",
+      "icon": "menu-icon tf-icons bx bxs-food-menu",
+      "slug": "store-menu",
+      "url": "admin/menu"
+    },
+    {
+      "name": "Inventory",
+      "icon": "menu-icon tf-icons bx bx-notepad",
+      "slug": "store-inventory",
+      "url": "admin/inventory"
+    },
+    {
+      "name": "Sales",
+      "icon": "menu-icon tf-icons bx bx-money-withdraw",
+      "slug": "store-sales",
+      "url": "admin/sales"
+    },
+    {
+      "name": "Product",
+      "icon": "menu-icon tf-icons bx bxs-coffee-bean",
+      "slug": "store-product",
+      "url": "admin/product"
+    },
+    {
+      "menuHeader": "Dashboard & Analytics"
+    },
+    {
+      "name": "Analytics",
+      "icon": "menu-icon tf-icons bx bx-cube-alt",
+      "slug": "store-analytics",
+      "url": "admin/analytics"
+    },
+    {
+      "menuHeader": "Accounts"
+    },
+    {
+      "name": "Accounts",
+      "icon": "menu-icon tf-icons bx bx bx-user",
+      "slug": "store-account",
+      "url": "admin/accounts"
+    }
+  ]
+}
