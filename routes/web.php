@@ -72,6 +72,7 @@ Route::get('/admin/product', [StoreProduct::class, 'index'])->name('store-produc
 Route::get('/admin/analytics', [Analytics::class, 'index'])->name('dashboard-analytics');
 //Accounts
 Route::get('/admin/accounts', [StoreAccount::class, 'index'])->name('store-account');
+Route::post('/admin/accounts/add', [StoreAccount::class, 'addPersonalDetails'])->name('store-account.add');
 
 // cart
 Route::get('/admin/cart', [StoreCart::class, 'index'])->name('store-cart');

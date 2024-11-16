@@ -14,8 +14,9 @@
   <!-- Canonical SEO -->
   <link rel="canonical" href="{{ config('variables.productPage') ? config('variables.productPage') : '' }}">
   <!-- Favicon -->
-  <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/favicon/favicon.ico') }}" />
-
+  <link rel="icon" type="image/x-icon" href="{{ asset('assets/img/logo/logo.png') }}" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
   <!-- Include Styles -->

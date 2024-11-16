@@ -13,7 +13,7 @@ $isFooter = ($isFooter ?? true);
 $navbarDetached = 'navbar-detached';
 
 /* Content classes */
-$container = ($container ?? 'container-xxl');
+$container = ($container ?? 'container-xl');
 
 @endphp
 

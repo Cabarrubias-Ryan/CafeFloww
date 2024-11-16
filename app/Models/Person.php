@@ -19,5 +19,8 @@ class Person extends Model
     'sex',
     'nationality',
     'religion',
+    'created_at',
+    'updated_at',
+    'deleted_at',
   ];
 }
