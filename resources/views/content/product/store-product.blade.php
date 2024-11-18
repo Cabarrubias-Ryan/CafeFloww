@@ -4,6 +4,7 @@
 
 @section('vendor-script')
 <script src="{{asset('assets/vendor/libs/masonry/masonry.js')}}"></script>
+<script src="{{ asset('assets/js/scripts/product.js')}}"></script>
 @endsection
 
 @section('content')
@@ -43,19 +44,18 @@
                   <tr>
                     <th>Product</th>
                     <th>Supplier</th>
-                    <th>Quantity</th>
+                    <th>Product Code</th>
                     <th>Status</th>
                     <th>Details</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
+                  @foreach ($productCoffee as $coffee)
                   <tr>
-                    <td><i class="bx bx-coffee bx-sm text-danger me-3"></i> <span class="fw-medium">Coffee</span></td>
-                    <td>Albert Cook</td>
-                    <td>
-                      30
-                    </td>
+                    <td><i class="bx bx-coffee bx-sm text-danger me-3"></i> <span class="fw-medium">{{ $coffee->name }}</span></td>
+                    <td>{{$coffee->fullname}}</td>
+                    <td>{{ $coffee->product_code}}</td>
                     <td><span class="badge bg-label-primary me-1">Active</span></td>
                     <td><i class="bx bx-detail bx-sm text-dark me-3"></td>
                     <td>
@@ -68,98 +68,36 @@
                       </div>
                     </td>
                   </tr>
-                  <tr>
-                    <td><i class="bx bx-coffee bx-sm text-danger me-3"></i> <span class="fw-medium">Coffee</span></td>
-                    <td>Albert Cook</td>
-                    <td>
-                      30
-                    </td>
-                    <td><span class="badge bg-label-primary me-1">Active</span></td>
-                    <td><i class="bx bx-detail bx-sm text-dark me-3"></td>
-                    <td>
-                      <div class="dropdown">
-                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
-                        <div class="dropdown-menu">
-                          <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                          <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><i class="bx bx-coffee bx-sm text-danger me-3"></i> <span class="fw-medium">Coffee</span></td>
-                    <td>Albert Cook</td>
-                    <td>
-                      30
-                    </td>
-                    <td><span class="badge bg-label-primary me-1">Active</span></td>
-                    <td><i class="bx bx-detail bx-sm text-dark me-3"></td>
-                    <td>
-                      <div class="dropdown">
-                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
-                        <div class="dropdown-menu">
-                          <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                          <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td><i class="bx bx-coffee bx-sm text-danger me-3"></i> <span class="fw-medium">Coffee</span></td>
-                    <td>Albert Cook</td>
-                    <td>
-                      30
-                    </td>
-                    <td><span class="badge bg-label-primary me-1">Active</span></td>
-                    <td><i class="bx bx-detail bx-sm text-dark me-3"></td>
-                    <td>
-                      <div class="dropdown">
-                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
-                        <div class="dropdown-menu">
-                          <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                          <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
-                        </div>
-                      </div>
-                    </td>
-                  </tr>
+                  @endforeach
                 </tbody>
               </table>
             </div>
-          <div class="pagination justify-content-end">
-            <!-- Basic Pagination -->
-            <nav aria-label="Page navigation">
-              <ul class="pagination">
-                <li class="page-item first">
-                  <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevrons-left"></i></a>
-                </li>
-                <li class="page-item prev">
-                  <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-left"></i></a>
-                </li>
-                <li class="page-item active">
-                  <a class="page-link" href="javascript:void(0);">1</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="javascript:void(0);">2</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="javascript:void(0);">3</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="javascript:void(0);">4</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="javascript:void(0);">5</a>
-                </li>
-                <li class="page-item next">
-                  <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-right"></i></a>
-                </li>
-                <li class="page-item last">
-                  <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevrons-right"></i></a>
-                </li>
-              </ul>
-            </nav>
-            <!--/ Basic Pagination -->
-          </div>
+            <div class="demo-inline-spacing">
+              <nav aria-label="Page navigation">
+                 <ul class="pagination justify-content-end">
+                    <!-- Previous Page Link -->
+                    <li class="page-item {{ ($productCoffee->onFirstPage()) ? 'disabled' : '' }}">
+                        <a class="page-link" href="{{ $productCoffee->previousPageUrl() }}" tabindex="-1">
+                            <i class="tf-icon bx bx-chevron-left"></i>
+                        </a>
+                    </li>
+
+                    <!-- Page Numbers -->
+                    @foreach ($productCoffee->getUrlRange(1, $productCoffee->lastPage()) as $page => $url)
+                        <li class="page-item {{ ($productCoffee->currentPage() == $page) ? 'active' : '' }}">
+                            <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                        </li>
+                    @endforeach
+
+                    <!-- Next Page Link -->
+                    <li class="page-item {{ ($productCoffee->hasMorePages()) ? '' : 'disabled' }}">
+                        <a class="page-link" href="{{ $productCoffee->nextPageUrl() }}">
+                            <i class="tf-icon bx bx-chevron-right"></i>
+                        </a>
+                    </li>
+                 </ul>
+              </nav>
+           </div>
         </div>
 
         <div class="tab-pane fade" id="navs-pills-top-profile" role="tabpanel">
@@ -175,19 +113,18 @@
                 <tr>
                   <th>Product</th>
                   <th>Supplier</th>
-                  <th>Quantity</th>
+                  <th>Product Code</th>
                   <th>Status</th>
                   <th>Details</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
+                @foreach ($productIcedCoffee as $icedCoffe)
                 <tr>
-                  <td><i class="bx bx-coffee bx-sm text-danger me-3"></i> <span class="fw-medium">Coffee</span></td>
-                  <td>Albert Cook</td>
-                  <td>
-                    30
-                  </td>
+                  <td><i class="bx bxs-coffee-togo bx-sm text-danger me-3"></i> <span class="fw-medium">{{ $icedCoffe->name }}</span></td>
+                  <td>{{ $icedCoffe->fullname }}</td>
+                  <td>{{ $icedCoffe->product_code }}</td>
                   <td><span class="badge bg-label-primary me-1">Active</span></td>
                   <td><i class="bx bx-detail bx-sm text-dark me-3"></td>
                   <td>
@@ -200,98 +137,36 @@
                     </div>
                   </td>
                 </tr>
-                <tr>
-                  <td><i class="bx bx-coffee bx-sm text-danger me-3"></i> <span class="fw-medium">Coffee</span></td>
-                  <td>Albert Cook</td>
-                  <td>
-                    30
-                  </td>
-                  <td><span class="badge bg-label-primary me-1">Active</span></td>
-                  <td><i class="bx bx-detail bx-sm text-dark me-3"></td>
-                  <td>
-                    <div class="dropdown">
-                      <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
-                      <div class="dropdown-menu">
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><i class="bx bx-coffee bx-sm text-danger me-3"></i> <span class="fw-medium">Coffee</span></td>
-                  <td>Albert Cook</td>
-                  <td>
-                    30
-                  </td>
-                  <td><span class="badge bg-label-primary me-1">Active</span></td>
-                  <td><i class="bx bx-detail bx-sm text-dark me-3"></td>
-                  <td>
-                    <div class="dropdown">
-                      <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
-                      <div class="dropdown-menu">
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><i class="bx bx-coffee bx-sm text-danger me-3"></i> <span class="fw-medium">Coffee</span></td>
-                  <td>Albert Cook</td>
-                  <td>
-                    30
-                  </td>
-                  <td><span class="badge bg-label-primary me-1">Active</span></td>
-                  <td><i class="bx bx-detail bx-sm text-dark me-3"></td>
-                  <td>
-                    <div class="dropdown">
-                      <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
-                      <div class="dropdown-menu">
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
+                @endforeach
               </tbody>
             </table>
           </div>
-          <div class="pagination justify-content-end">
-            <!-- Basic Pagination -->
+          <div class="demo-inline-spacing">
             <nav aria-label="Page navigation">
-              <ul class="pagination">
-                <li class="page-item first">
-                  <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevrons-left"></i></a>
-                </li>
-                <li class="page-item prev">
-                  <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-left"></i></a>
-                </li>
-                <li class="page-item active">
-                  <a class="page-link" href="javascript:void(0);">1</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="javascript:void(0);">2</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="javascript:void(0);">3</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="javascript:void(0);">4</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="javascript:void(0);">5</a>
-                </li>
-                <li class="page-item next">
-                  <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-right"></i></a>
-                </li>
-                <li class="page-item last">
-                  <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevrons-right"></i></a>
-                </li>
-              </ul>
+               <ul class="pagination justify-content-end">
+                  <!-- Previous Page Link -->
+                  <li class="page-item {{ ($productIcedCoffee->onFirstPage()) ? 'disabled' : '' }}">
+                      <a class="page-link" href="{{ $productIcedCoffee->previousPageUrl() }}" tabindex="-1">
+                          <i class="tf-icon bx bx-chevron-left"></i>
+                      </a>
+                  </li>
+
+                  <!-- Page Numbers -->
+                  @foreach ($productIcedCoffee->getUrlRange(1, $productIcedCoffee->lastPage()) as $page => $url)
+                      <li class="page-item {{ ($productIcedCoffee->currentPage() == $page) ? 'active' : '' }}">
+                          <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                      </li>
+                  @endforeach
+
+                  <!-- Next Page Link -->
+                  <li class="page-item {{ ($productIcedCoffee->hasMorePages()) ? '' : 'disabled' }}">
+                      <a class="page-link" href="{{ $productIcedCoffee->nextPageUrl() }}">
+                          <i class="tf-icon bx bx-chevron-right"></i>
+                      </a>
+                  </li>
+               </ul>
             </nav>
-            <!--/ Basic Pagination -->
-          </div>
+         </div>
         </div>
         <div class="tab-pane fade" id="navs-pills-top-messages" role="tabpanel">
           <div class="table-responsive text-nowrap">
@@ -306,123 +181,60 @@
                 <tr>
                   <th>Product</th>
                   <th>Supplier</th>
-                  <th>Quantity</th>
+                  <th>Product Code</th>
                   <th>Status</th>
                   <th>Details</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <td><i class="bx bx-coffee bx-sm text-danger me-3"></i> <span class="fw-medium">Coffee</span></td>
-                  <td>Albert Cook</td>
-                  <td>
-                    30
-                  </td>
-                  <td><span class="badge bg-label-primary me-1">Active</span></td>
-                  <td><i class="bx bx-detail bx-sm text-dark me-3"></td>
-                  <td>
-                    <div class="dropdown">
-                      <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
-                      <div class="dropdown-menu">
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
+                  @foreach ($productCake as $cake)
+                  <tr>
+                    <td><i class="bx bx-cake bx-sm text-danger me-3"></i> <span class="fw-medium">{{ $cake->name}}</span></td>
+                    <td>{{ $cake->fullname}}</td>
+                    <td>{{ $cake->product_code}}</td>
+                    <td><span class="badge bg-label-primary me-1">Active</span></td>
+                    <td><i class="bx bx-detail bx-sm text-dark me-3"></td>
+                    <td>
+                      <div class="dropdown">
+                        <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
+                        <div class="dropdown-menu">
+                          <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
+                          <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
+                        </div>
                       </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><i class="bx bx-coffee bx-sm text-danger me-3"></i> <span class="fw-medium">Coffee</span></td>
-                  <td>Albert Cook</td>
-                  <td>
-                    30
-                  </td>
-                  <td><span class="badge bg-label-primary me-1">Active</span></td>
-                  <td><i class="bx bx-detail bx-sm text-dark me-3"></td>
-                  <td>
-                    <div class="dropdown">
-                      <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
-                      <div class="dropdown-menu">
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><i class="bx bx-coffee bx-sm text-danger me-3"></i> <span class="fw-medium">Coffee</span></td>
-                  <td>Albert Cook</td>
-                  <td>
-                    30
-                  </td>
-                  <td><span class="badge bg-label-primary me-1">Active</span></td>
-                  <td><i class="bx bx-detail bx-sm text-dark me-3"></td>
-                  <td>
-                    <div class="dropdown">
-                      <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
-                      <div class="dropdown-menu">
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><i class="bx bx-coffee bx-sm text-danger me-3"></i> <span class="fw-medium">Coffee</span></td>
-                  <td>Albert Cook</td>
-                  <td>
-                    30
-                  </td>
-                  <td><span class="badge bg-label-primary me-1">Active</span></td>
-                  <td><i class="bx bx-detail bx-sm text-dark me-3"></td>
-                  <td>
-                    <div class="dropdown">
-                      <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
-                      <div class="dropdown-menu">
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
+                    </td>
+                  </tr>
+                  @endforeach
               </tbody>
             </table>
           </div>
-          <div class="pagination justify-content-end">
-            <!-- Basic Pagination -->
+          <div class="demo-inline-spacing">
             <nav aria-label="Page navigation">
-              <ul class="pagination">
-                <li class="page-item first">
-                  <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevrons-left"></i></a>
-                </li>
-                <li class="page-item prev">
-                  <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-left"></i></a>
-                </li>
-                <li class="page-item active">
-                  <a class="page-link" href="javascript:void(0);">1</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="javascript:void(0);">2</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="javascript:void(0);">3</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="javascript:void(0);">4</a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link" href="javascript:void(0);">5</a>
-                </li>
-                <li class="page-item next">
-                  <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-right"></i></a>
-                </li>
-                <li class="page-item last">
-                  <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevrons-right"></i></a>
-                </li>
-              </ul>
+               <ul class="pagination justify-content-end">
+                  <!-- Previous Page Link -->
+                  <li class="page-item {{ ($productCake->onFirstPage()) ? 'disabled' : '' }}">
+                      <a class="page-link" href="{{ $productCake->previousPageUrl() }}" tabindex="-1">
+                          <i class="tf-icon bx bx-chevron-left"></i>
+                      </a>
+                  </li>
+
+                  <!-- Page Numbers -->
+                  @foreach ($productCake->getUrlRange(1, $productCake->lastPage()) as $page => $url)
+                      <li class="page-item {{ ($productCake->currentPage() == $page) ? 'active' : '' }}">
+                          <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                      </li>
+                  @endforeach
+
+                  <!-- Next Page Link -->
+                  <li class="page-item {{ ($productCake->hasMorePages()) ? '' : 'disabled' }}">
+                      <a class="page-link" href="{{ $productCake->nextPageUrl() }}">
+                          <i class="tf-icon bx bx-chevron-right"></i>
+                      </a>
+                  </li>
+               </ul>
             </nav>
-            <!--/ Basic Pagination -->
-          </div>
+         </div>
         </div>
       </div>
     </div>
@@ -430,38 +242,75 @@
 </div>
 <div class="modal fade" id="backDropModal" data-bs-backdrop="static" tabindex="-1">
   <div class="modal-dialog">
-    <form class="modal-content">
+    <form class="modal-content" id="productForm">
+      @csrf
       <div class="modal-header">
-        <h5 class="modal-title" id="backDropModalTitle">Modal title</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
+        <h5 class="modal-title text-center" id="backDropModalTitle">Product</h5>
+        <div class="row">
+          <div class="col mb-3">
+            <div class="mb-4 d-flex justify-content-center">
+                <img id="selectedImage" src="{{asset('assets/img/logo/logo.png')}}"
+                alt="example placeholder" style="width: 300px;" />
+            </div>
+            <div class="d-flex justify-content-center">
+                <div data-mdb-ripple-init class="btn btn-primary btn-rounded">
+                    <label class="form-label text-white m-1" for="customFile1">Choose file</label>
+                    <input type="file" name="picture" class="form-control d-none" id="customFile1" onchange="displaySelectedImage(event, 'selectedImage')" />
+                </div>
+            </div>
+          </div>
+        </div>
         <div class="row">
           <div class="col mb-3">
             <label for="product" class="form-label">Product Name</label>
-            <input type="text" id="product" class="form-control" placeholder="Enter Name">
+            <input type="text" id="product" name="product" class="form-control" placeholder="Enter Name">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col mb-3">
+            <label for="product" class="form-label">Category</label>
+            <select name="category" class="form-control" id="category">
+              <option value="" selected disabled>--Select category--</option>
+              <option value="Cake">Cake</option>
+              <option value="Iced Coffee">Iced Coffee</option>
+              <option value="Coffee">Coffee</option>
+            </select>
           </div>
         </div>
         <div class="row g-2 pt-2">
           <div class="col mb-0">
             <label for="productcode" class="form-label">Product code</label>
-            <input type="text" id="productcode" class="form-control" placeholder="Enter Product Code">
+            <input type="text" id="productcode" name="productcode" class="form-control" placeholder="Enter Product Code">
           </div>
           <div class="col mb-0">
-            <label for="quantity" class="form-label">Quantity</label>
-            <input type="number" id="quantity" class="form-control">
+            <label for="price" class="form-label">Price</label>
+            <input type="number" placeholder="Enter price" id="price" name="price" class="form-control">
           </div>
         </div>
         <div class="row pt-2">
           <div class="col mb-3">
             <label for="supplier" class="form-label">Supplier</label>
-            <input type="text" id="supplier" class="form-control" placeholder="Enter Supplier">
+            <select name="supplier" id="supplier" class="form-control">
+              <option value="" selected disabled>--Select supplier--</option>
+              @foreach ($supplier as $item)
+              <option value="{{ $item->id}}">{{ $item->name}}</option>
+              @endforeach
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea name="description" id="description" class="form-control" rows="4" placeholder="Say it"></textarea>
           </div>
         </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save</button>
+        <button type="button" id="saveBtn" class="btn btn-primary">Save</button>
       </div>
     </form>
   </div>

@@ -51,6 +51,7 @@ use App\Http\Controllers\cart\StoreCart;
 use App\Http\Controllers\sales\StoreSales;
 use App\Http\Controllers\product\StoreProduct;
 use App\Http\Controllers\account\StoreAccount;
+use App\Http\Controllers\supplier\StoreSupplier;
 
 // New Arrangement
 
@@ -67,12 +68,17 @@ Route::get('/admin/inventory', [StoreInventory::class, 'index'])->name('store-in
 Route::get('/admin/sales', [StoreSales::class, 'index'])->name('store-sales');
 // product
 Route::get('/admin/product', [StoreProduct::class, 'index'])->name('store-product');
+Route::post('/admin/product/add', [StoreProduct::class, 'addProduct'])->name('store-product.add');
+// supplier
+Route::get('/admin/supplier', [StoreSupplier::class, 'index'])->name('store-supplier');
+Route::post('/admin/supplier/add', [StoreSupplier::class, 'addSupplier'])->name('store-supplier.add');
 
 // Main Page Route
 Route::get('/admin/analytics', [Analytics::class, 'index'])->name('dashboard-analytics');
 //Accounts
 Route::get('/admin/accounts', [StoreAccount::class, 'index'])->name('store-account');
 Route::post('/admin/accounts/add', [StoreAccount::class, 'addPersonalDetails'])->name('store-account.add');
+Route::post('/admin/accounts/adduser', [StoreAccount::class, 'addUser'])->name('store-account.addUser');
 
 // cart
 Route::get('/admin/cart', [StoreCart::class, 'index'])->name('store-cart');

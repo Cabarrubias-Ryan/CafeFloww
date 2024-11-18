@@ -25,12 +25,18 @@
       "url": "admin/product"
     },
     {
+      "name": "Supplier",
+      "icon": "menu-icon tf-icons bx bxs-user",
+      "slug": "store-supplier",
+      "url": "admin/supplier"
+    },
+    {
       "menuHeader": "Dashboard & Analytics"
     },
     {
-      "name": "Analytics",
-      "icon": "menu-icon tf-icons bx bx-cube-alt",
-      "slug": "store-analytics",
+      "name": "Analitics",
+      "icon": "menu-icon tf-icons bx bx bx-cube-alt",
+      "slug": "dashboard-analytics",
       "url": "admin/analytics"
     },
     {

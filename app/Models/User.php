@@ -10,7 +10,7 @@ use Illuminate\Auth\Authenticatable;
 class User extends Model implements AuthenticatableContract
 {
   use SoftDeletes, Authenticatable;
-  protected $table = 'user';
+  protected $table = 'users';
   protected $fillable = [
     'id',
     'person_id',

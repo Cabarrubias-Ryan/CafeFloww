@@ -15,6 +15,8 @@ class Product extends Model
     'name',
     'description',
     'discount',
+    'category',
+    'picture',
     'created_at',
     'updated_at',
     'deleted_at',

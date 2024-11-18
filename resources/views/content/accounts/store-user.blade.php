@@ -60,7 +60,7 @@
                   @if ($person->count() > 0)
                   @foreach ($person as $data)
                     <tr>
-                      <td>{{$data->firstname}}</td>
+                      <td>{{$data->firstname}} {{$data->middlename}} {{$data->lastnames}}</td>
                       <td>{{$data->sex}}</td>
                       <td>{{$data->phone_number}}</td>
                       <td>{{$data->birthday}}</td>
@@ -87,6 +87,32 @@
                 </tbody>
               </table>
             </div>
+            <div class="demo-inline-spacing">
+              <nav aria-label="Page navigation">
+                 <ul class="pagination justify-content-end">
+                    <!-- Previous Page Link -->
+                    <li class="page-item {{ ($person->onFirstPage()) ? 'disabled' : '' }}">
+                        <a class="page-link" href="{{ $person->previousPageUrl() }}" tabindex="-1">
+                            <i class="tf-icon bx bx-chevron-left"></i>
+                        </a>
+                    </li>
+
+                    <!-- Page Numbers -->
+                    @foreach ($person->getUrlRange(1, $person->lastPage()) as $page => $url)
+                        <li class="page-item {{ ($person->currentPage() == $page) ? 'active' : '' }}">
+                            <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                        </li>
+                    @endforeach
+
+                    <!-- Next Page Link -->
+                    <li class="page-item {{ ($person->hasMorePages()) ? '' : 'disabled' }}">
+                        <a class="page-link" href="{{ $person->nextPageUrl() }}">
+                            <i class="tf-icon bx bx-chevron-right"></i>
+                        </a>
+                    </li>
+                 </ul>
+              </nav>
+           </div>
         </div>
         <div class="tab-pane fade" id="navs-pills-top-profile" role="tabpanel">
           <!-- User Details -->
@@ -99,31 +125,20 @@
             <table class="table table-hover">
               <thead>
                 <tr>
-                  <th>Project</th>
-                  <th>Client</th>
-                  <th>Users</th>
-                  <th>Status</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Account role</th>
+                  <th>Employee Number</th>
                   <th>Actions</th>
                 </tr>
               </thead>
               <tbody class="table-border-bottom-0">
+                @foreach ($usersdetails as $item)
                 <tr>
-                  <td><i class="bx bxl-angular bx-sm text-danger me-3"></i> <span class="fw-medium">Angular Project</span></td>
-                  <td>Albert Cook</td>
-                  <td>
-                    <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                      <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Lilian Fuller">
-                        <img src="{{asset('assets/img/avatars/5.png')}}" alt="Avatar" class="rounded-circle">
-                      </li>
-                      <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Sophia Wilkerson">
-                        <img src="{{asset('assets/img/avatars/6.png')}}" alt="Avatar" class="rounded-circle">
-                      </li>
-                      <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Christina Parker">
-                        <img src="{{asset('assets/img/avatars/7.png')}}" alt="Avatar" class="rounded-circle">
-                      </li>
-                    </ul>
-                  </td>
-                  <td><span class="badge bg-label-primary me-1">Active</span></td>
+                  <td>{{$item->firstname}} {{$item->middlename}} {{$item->lastname}}</td>
+                  <td>{{$item->email}}</td>
+                  <td>{{$item->role}}</td>
+                  <td>{{$item->employee_number}}</td>
                   <td>
                     <div class="dropdown">
                       <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
@@ -134,90 +149,36 @@
                     </div>
                   </td>
                 </tr>
-                <tr>
-                  <td><i class="bx bxl-react bx-sm text-info me-3"></i> <span class="fw-medium">React Project</span></td>
-                  <td>Barry Hunter</td>
-                  <td>
-                    <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                      <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Lilian Fuller">
-                        <img src="{{asset('assets/img/avatars/5.png')}}" alt="Avatar" class="rounded-circle">
-                      </li>
-                      <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Sophia Wilkerson">
-                        <img src="{{asset('assets/img/avatars/6.png')}}" alt="Avatar" class="rounded-circle">
-                      </li>
-                      <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Christina Parker">
-                        <img src="{{asset('assets/img/avatars/7.png')}}" alt="Avatar" class="rounded-circle">
-                      </li>
-                    </ul>
-                  </td>
-                  <td><span class="badge bg-label-success me-1">Completed</span></td>
-                  <td>
-                    <div class="dropdown">
-                      <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
-                      <div class="dropdown-menu">
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><i class="bx bxl-vuejs bx-sm text-success me-3"></i> <span class="fw-medium">VueJs Project</span></td>
-                  <td>Trevor Baker</td>
-                  <td>
-                    <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                      <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Lilian Fuller">
-                        <img src="{{asset('assets/img/avatars/5.png')}}" alt="Avatar" class="rounded-circle">
-                      </li>
-                      <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Sophia Wilkerson">
-                        <img src="{{asset('assets/img/avatars/6.png')}}" alt="Avatar" class="rounded-circle">
-                      </li>
-                      <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Christina Parker">
-                        <img src="{{asset('assets/img/avatars/7.png')}}" alt="Avatar" class="rounded-circle">
-                      </li>
-                    </ul>
-                  </td>
-                  <td><span class="badge bg-label-info me-1">Scheduled</span></td>
-                  <td>
-                    <div class="dropdown">
-                      <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
-                      <div class="dropdown-menu">
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-                <tr>
-                  <td><i class="bx bxl-bootstrap bx-sm text-primary me-3"></i> <span class="fw-medium">Bootstrap Project</span></td>
-                  <td>Jerry Milton</td>
-                  <td>
-                    <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                      <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Lilian Fuller">
-                        <img src="{{asset('assets/img/avatars/5.png')}}" alt="Avatar" class="rounded-circle">
-                      </li>
-                      <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Sophia Wilkerson">
-                        <img src="{{asset('assets/img/avatars/6.png')}}" alt="Avatar" class="rounded-circle">
-                      </li>
-                      <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="Christina Parker">
-                        <img src="{{asset('assets/img/avatars/7.png')}}" alt="Avatar" class="rounded-circle">
-                      </li>
-                    </ul>
-                  </td>
-                  <td><span class="badge bg-label-warning me-1">Pending</span></td>
-                  <td>
-                    <div class="dropdown">
-                      <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
-                      <div class="dropdown-menu">
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
+                @endforeach
               </tbody>
             </table>
           </div>
+          <div class="demo-inline-spacing">
+            <nav aria-label="Page navigation">
+               <ul class="pagination justify-content-end">
+                  <!-- Previous Page Link -->
+                  <li class="page-item {{ ($usersdetails->onFirstPage()) ? 'disabled' : '' }}">
+                      <a class="page-link" href="{{ $usersdetails->previousPageUrl() }}" tabindex="-1">
+                          <i class="tf-icon bx bx-chevron-left"></i>
+                      </a>
+                  </li>
+
+                  <!-- Page Numbers -->
+                  @foreach ($usersdetails->getUrlRange(1, $usersdetails->lastPage()) as $page => $url)
+                      <li class="page-item {{ ($usersdetails->currentPage() == $page) ? 'active' : '' }}">
+                          <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                      </li>
+                  @endforeach
+
+                  <!-- Next Page Link -->
+                  <li class="page-item {{ ($usersdetails->hasMorePages()) ? '' : 'disabled' }}">
+                      <a class="page-link" href="{{ $usersdetails->nextPageUrl() }}">
+                          <i class="tf-icon bx bx-chevron-right"></i>
+                      </a>
+                  </li>
+               </ul>
+            </nav>
+         </div>
         </div>
       </div>
     </div>
@@ -295,7 +256,8 @@
 <!-- Account User Modal -->
 <div class="modal fade" id="userModal" data-bs-backdrop="static" tabindex="-1">
   <div class="modal-dialog">
-    <form class="modal-content" id="detailsForm">
+    <form class="modal-content" id="userForm">
+      @csrf
       <div class="modal-header">
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
@@ -304,25 +266,25 @@
         <div class="row">
           <div class="col mb-3">
             <label for="username" class="form-label">Usename</label>
-            <input type="text" id="username" class="form-control" placeholder="Enter username">
+            <input type="text" name="username" id="username" class="form-control" placeholder="Enter username">
           </div>
         </div>
         <div class="row">
           <div class="col mb-3">
             <label for="password" class="form-label">Password</label>
-            <input type="password" id="password" class="form-control" placeholder="**********">
+            <input type="password" name="password" id="password" class="form-control" placeholder="**********">
           </div>
         </div>
         <div class="row">
           <div class="col mb-3">
             <label for="password_confirmation" class="form-label">Retry Password</label>
-            <input type="password" id="password_confirmation" class="form-control" placeholder="**********">
+            <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" placeholder="**********">
           </div>
         </div>
         <div class="row">
           <div class="col mb-3">
             <label for="email" class="form-label">Email</label>
-            <input type="email" id="email" class="form-control" placeholder="example@email.com">
+            <input type="email" id="email" name="email" class="form-control" placeholder="example@email.com">
           </div>
         </div>
         <div class="row">
@@ -330,6 +292,9 @@
             <label for="Accountholder" class="form-label">Account Holder</label>
             <select name="accountholder" id="accountholder" class="form-control">
               <option value="" selected disabled>--Account holder--</option>
+              @foreach ($accountholder as $data)
+                  <option value="{{ $data->id}}">{{ $data->firstname }} {{$data->middlename}} {{ $data->lastname }}</option>
+              @endforeach
             </select>
           </div>
         </div>
