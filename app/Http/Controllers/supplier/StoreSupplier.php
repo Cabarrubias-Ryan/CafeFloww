@@ -29,4 +29,40 @@ class StoreSupplier extends Controller
       return response()->json(['Error' => 0, 'Message' => 'You Successfully added a supplier']);
     }
   }
+  public function editSupplier(Request $request)
+  {
+    $id = $request->Edit_supplier_id;
+
+    $data = [
+      'name' => $request->Edit_supplier,
+      'phone' => $request->Edit_phonenumber,
+      'address' => $request->Edit_address,
+      'description' => $request->Edit_description,
+      'updated_at' => date('Y-m-d H:i:s'),
+    ];
+    $supplier = Supplier::where('id', $id)->update($data);
+
+    if ($supplier) {
+      return response()->json(['Error' => 0, 'Message' => 'You Successfully Updated the Data']);
+    } else {
+      return response()->json(['Error' => 1, 'Message' => 'Failed to edit the supplier']);
+    }
+  }
+  public function deleteSupplier(Request $request)
+  {
+    $productID = $request->id;
+    if (empty($productID)) {
+      return response()->json(['Error' => 1, 'Message' => 'Invalid product ID.']);
+    }
+
+    $dataProduct = [
+      'deleted_at' => date('Y-m-d H:i:s'),
+    ];
+
+    $product = Supplier::where('id', $productID)->update($dataProduct);
+
+    if ($product) {
+      return response()->json(['Error' => 0, 'Message' => 'You Successfully Delete the Data']);
+    }
+  }
 }

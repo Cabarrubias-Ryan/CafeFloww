@@ -2,47 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\dashboard\Analytics;
-use App\Http\Controllers\layouts\WithoutMenu;
-use App\Http\Controllers\layouts\WithoutNavbar;
-use App\Http\Controllers\layouts\Fluid;
-use App\Http\Controllers\layouts\Container;
-use App\Http\Controllers\layouts\Blank;
 use App\Http\Controllers\pages\AccountSettingsAccount;
 use App\Http\Controllers\pages\AccountSettingsNotifications;
 use App\Http\Controllers\pages\AccountSettingsConnections;
-use App\Http\Controllers\pages\MiscError;
-use App\Http\Controllers\pages\MiscUnderMaintenance;
 use App\Http\Controllers\authentications\LoginBasic;
 use App\Http\Controllers\authentications\RegisterBasic;
 use App\Http\Controllers\authentications\ForgotPasswordBasic;
-use App\Http\Controllers\cards\CardBasic;
-use App\Http\Controllers\user_interface\Accordion;
-use App\Http\Controllers\user_interface\Alerts;
-use App\Http\Controllers\user_interface\Badges;
-use App\Http\Controllers\user_interface\Buttons;
-use App\Http\Controllers\user_interface\Carousel;
-use App\Http\Controllers\user_interface\Collapse;
-use App\Http\Controllers\user_interface\Dropdowns;
-use App\Http\Controllers\user_interface\Footer;
-use App\Http\Controllers\user_interface\ListGroups;
-use App\Http\Controllers\user_interface\Modals;
-use App\Http\Controllers\user_interface\Navbar;
-use App\Http\Controllers\user_interface\Offcanvas;
-use App\Http\Controllers\user_interface\PaginationBreadcrumbs;
-use App\Http\Controllers\user_interface\Progress;
-use App\Http\Controllers\user_interface\Spinners;
-use App\Http\Controllers\user_interface\TabsPills;
-use App\Http\Controllers\user_interface\Toasts;
-use App\Http\Controllers\user_interface\TooltipsPopovers;
-use App\Http\Controllers\user_interface\Typography;
-use App\Http\Controllers\extended_ui\PerfectScrollbar;
-use App\Http\Controllers\extended_ui\TextDivider;
-use App\Http\Controllers\icons\Boxicons;
-use App\Http\Controllers\form_elements\BasicInput;
-use App\Http\Controllers\form_elements\InputGroups;
-use App\Http\Controllers\form_layouts\VerticalForm;
-use App\Http\Controllers\form_layouts\HorizontalForm;
-use App\Http\Controllers\tables\Basic as TablesBasic;
 
 //New Arranegment
 use App\Http\Controllers\menu\StoreMenu;
@@ -57,94 +22,66 @@ use App\Http\Controllers\supplier\StoreSupplier;
 
 // authentication
 Route::get('/', [LoginBasic::class, 'index'])->name('auth-login-basic');
-Route::get('/auth/register-basic', [RegisterBasic::class, 'index'])->name('auth-register-basic');
-Route::get('/auth/forgot-password-basic', [ForgotPasswordBasic::class, 'index'])->name('auth-reset-password-basic');
+Route::post('/login', [LoginBasic::class, 'loginAccount'])->name('auth-login-account');
 
-// menu
-Route::get('/admin/menu', [StoreMenu::class, 'index'])->name('store-menu');
-// inventory
-Route::get('/admin/inventory', [StoreInventory::class, 'index'])->name('store-inventory');
-// sales
-Route::get('/admin/sales', [StoreSales::class, 'index'])->name('store-sales');
-// product
-Route::get('/admin/product', [StoreProduct::class, 'index'])->name('store-product');
-Route::post('/admin/product/add', [StoreProduct::class, 'addProduct'])->name('store-product.add');
-// supplier
-Route::get('/admin/supplier', [StoreSupplier::class, 'index'])->name('store-supplier');
-Route::post('/admin/supplier/add', [StoreSupplier::class, 'addSupplier'])->name('store-supplier.add');
+Route::prefix('admin')
+  ->middleware('auth')
+  ->group(function () {
+    // Store Menu
+    Route::controller(StoreMenu::class)->group(function () {
+      Route::get('/menu', 'index')->name('store-menu');
+      Route::post('/menu/add', 'addToCart')->name('store-add-cart');
+    });
 
-// Main Page Route
-Route::get('/admin/analytics', [Analytics::class, 'index'])->name('dashboard-analytics');
-//Accounts
-Route::get('/admin/accounts', [StoreAccount::class, 'index'])->name('store-account');
-Route::post('/admin/accounts/add', [StoreAccount::class, 'addPersonalDetails'])->name('store-account.add');
-Route::post('/admin/accounts/adduser', [StoreAccount::class, 'addUser'])->name('store-account.addUser');
+    // Sales
+    Route::controller(StoreSales::class)->group(function () {
+      Route::get('/sales', 'index')->name('store-sales');
+    });
 
-// cart
-Route::get('/admin/cart', [StoreCart::class, 'index'])->name('store-cart');
+    // Product
+    Route::controller(StoreProduct::class)->group(function () {
+      Route::get('/product', 'index')->name('store-product');
+      Route::post('/product/add', 'addProduct')->name('store-product.add');
+      Route::post('/product/edit', 'editProduct')->name('store-product.edit');
+      Route::post('/product/delete', 'deleteProduct')->name('store-product.delete');
+    });
 
-// boundaries
+    // Supplier
+    Route::controller(StoreSupplier::class)->group(function () {
+      Route::get('/supplier', 'index')->name('store-supplier');
+      Route::post('/supplier/add', 'addSupplier')->name('store-supplier.add');
+      Route::post('/supplier/edit', 'editSupplier')->name('store-supplier.edit');
+      Route::post('/supplier/delete', 'deleteSupplier')->name('store-supplier.delete');
+    });
 
-// layout
-Route::get('/layouts/without-menu', [WithoutMenu::class, 'index'])->name('layouts-without-menu');
-Route::get('/layouts/without-navbar', [WithoutNavbar::class, 'index'])->name('layouts-without-navbar');
-Route::get('/layouts/fluid', [Fluid::class, 'index'])->name('layouts-fluid');
-Route::get('/layouts/container', [Container::class, 'index'])->name('layouts-container');
-Route::get('/layouts/blank', [Blank::class, 'index'])->name('layouts-blank');
+    // Main Page Route (Analytics)
+    Route::controller(Analytics::class)->group(function () {
+      Route::get('/analytics', 'index')->name('dashboard-analytics');
+    });
 
-// pages
-Route::get('/pages/account-settings-account', [AccountSettingsAccount::class, 'index'])->name(
-  'pages-account-settings-account'
-);
-Route::get('/pages/account-settings-notifications', [AccountSettingsNotifications::class, 'index'])->name(
-  'pages-account-settings-notifications'
-);
-Route::get('/pages/account-settings-connections', [AccountSettingsConnections::class, 'index'])->name(
-  'pages-account-settings-connections'
-);
-Route::get('/pages/misc-error', [MiscError::class, 'index'])->name('pages-misc-error');
-Route::get('/pages/misc-under-maintenance', [MiscUnderMaintenance::class, 'index'])->name(
-  'pages-misc-under-maintenance'
-);
+    // Accounts
+    Route::controller(StoreAccount::class)->group(function () {
+      Route::get('/accounts', 'index')->name('store-account');
+      Route::post('/accounts/add', 'addPersonalDetails')->name('store-account.add');
+      Route::post('/accounts/edit', 'editPersonalDetails')->name('store-account.edit');
+      Route::post('/accounts/adduser', 'addUser')->name('store-account.addUser');
+      Route::post('/accounts/edituser', 'editUser')->name('store-account.editUser');
+    });
 
-// cards
-Route::get('/cards/basic', [CardBasic::class, 'index'])->name('cards-basic');
+    // Cart
+    Route::controller(StoreCart::class)->group(function () {
+      Route::get('/cart', 'index')->name('store-cart');
+      Route::get('/cart/remove/{id}', 'removeData')->name('store-cart-remove');
+      Route::post('/cart/order', 'orderData')->name('store-cart-order');
+    });
 
-// User Interface
-Route::get('/ui/accordion', [Accordion::class, 'index'])->name('ui-accordion');
-Route::get('/ui/alerts', [Alerts::class, 'index'])->name('ui-alerts');
-Route::get('/ui/badges', [Badges::class, 'index'])->name('ui-badges');
-Route::get('/ui/buttons', [Buttons::class, 'index'])->name('ui-buttons');
-Route::get('/ui/carousel', [Carousel::class, 'index'])->name('ui-carousel');
-Route::get('/ui/collapse', [Collapse::class, 'index'])->name('ui-collapse');
-Route::get('/ui/dropdowns', [Dropdowns::class, 'index'])->name('ui-dropdowns');
-Route::get('/ui/footer', [Footer::class, 'index'])->name('ui-footer');
-Route::get('/ui/list-groups', [ListGroups::class, 'index'])->name('ui-list-groups');
-Route::get('/ui/modals', [Modals::class, 'index'])->name('ui-modals');
-Route::get('/ui/navbar', [Navbar::class, 'index'])->name('ui-navbar');
-Route::get('/ui/offcanvas', [Offcanvas::class, 'index'])->name('ui-offcanvas');
-Route::get('/ui/pagination-breadcrumbs', [PaginationBreadcrumbs::class, 'index'])->name('ui-pagination-breadcrumbs');
-Route::get('/ui/progress', [Progress::class, 'index'])->name('ui-progress');
-Route::get('/ui/spinners', [Spinners::class, 'index'])->name('ui-spinners');
-Route::get('/ui/tabs-pills', [TabsPills::class, 'index'])->name('ui-tabs-pills');
-Route::get('/ui/toasts', [Toasts::class, 'index'])->name('ui-toasts');
-Route::get('/ui/tooltips-popovers', [TooltipsPopovers::class, 'index'])->name('ui-tooltips-popovers');
-Route::get('/ui/typography', [Typography::class, 'index'])->name('ui-typography');
+    Route::controller(LoginBasic::class)->group(function () {
+      Route::get('/logout', 'logoutAccount')->name('auth-logout-account');
+    });
+    // Pages (Account Settings)
+    Route::controller(AccountSettingsAccount::class)->group(function () {
+      Route::get('/account-settings/account', 'index')->name('pages-account-settings-account');
+    });
+  });
 
-// extended ui
-Route::get('/extended/ui-perfect-scrollbar', [PerfectScrollbar::class, 'index'])->name('extended-ui-perfect-scrollbar');
-Route::get('/extended/ui-text-divider', [TextDivider::class, 'index'])->name('extended-ui-text-divider');
-
-// icons
-Route::get('/icons/boxicons', [Boxicons::class, 'index'])->name('icons-boxicons');
-
-// form elements
-Route::get('/forms/basic-inputs', [BasicInput::class, 'index'])->name('forms-basic-inputs');
-Route::get('/forms/input-groups', [InputGroups::class, 'index'])->name('forms-input-groups');
-
-// form layouts
-Route::get('/form/layouts-vertical', [VerticalForm::class, 'index'])->name('form-layouts-vertical');
-Route::get('/form/layouts-horizontal', [HorizontalForm::class, 'index'])->name('form-layouts-horizontal');
-
-// tables
-Route::get('/tables/basic', [TablesBasic::class, 'index'])->name('tables-basic');
+Route::get('/admin/cart/generate-pdf', [StoreCart::class, 'generatePDF'])->name('cart.generatePDF');

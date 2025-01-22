@@ -4,6 +4,7 @@
 
 @section('vendor-script')
 <script src="{{asset('assets/vendor/libs/masonry/masonry.js')}}"></script>
+<script src="{{ asset('assets/js/scripts/storemenu.js')}}"></script>
 @endsection
 
 @section('content')
@@ -37,108 +38,49 @@
           </div>
         </div>
         <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
+          @foreach ($productCoffee as $item)
           <div class="col">
             <div class="card h-60">
-              <img class="card-img-top" src="{{asset('assets/img/elements/2.jpg')}}" alt="Card image cap" />
+              <img class="card-img-top" src="{{$item->picture}}" alt="Card image cap" style="width: 100%; height: auto;"/>
               <div class="card-body">
-                <h5 class="card-title text-center">Card title</h5>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter">
+                <h5 class="card-title text-center">{{$item->name}}</h5>
+                <div class="mb-2 text-center">
+                  <span>&#8369;{{ number_format( $item->price,2)}}</span>
+                </div>
+                <button type="button" class="btn btn-primary menu-btn" id="menu-btn" data-bs-toggle="modal" data-bs-target="#modalCenter"  data-id="{{ $item->id }}" data-name="{{ $item->name }}"  data-price="{{ $item->price }}" data-picture="{{ $item->picture }}">
                   <span class="tf-icons bx bxs-cart-add me-1"></span>Order
                 </button>
               </div>
             </div>
           </div>
-          <div class="col">
-            <div class="card h-60">
-              <img class="card-img-top" src="{{asset('assets/img/elements/13.jpg')}}" alt="Card image cap" />
-              <div class="card-body">
-                <h5 class="card-title text-center">Card title</h5>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter">
-                  <span class="tf-icons bx bxs-cart-add me-1"></span>Order
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card h-60">
-              <img class="card-img-top" src="{{asset('assets/img/elements/4.jpg')}}" alt="Card image cap" />
-              <div class="card-body">
-                <h5 class="card-title text-center">Card title</h5>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter">
-                  <span class="tf-icons bx bxs-cart-add me-1"></span>Order
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card h-60">
-              <img class="card-img-top" src="{{asset('assets/img/elements/18.jpg')}}" alt="Card image cap" />
-              <div class="card-body">
-                <h5 class="card-title text-center">Card title</h5>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter">
-                  <span class="tf-icons bx bxs-cart-add me-1"></span>Order
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card h-60">
-              <img class="card-img-top" src="{{asset('assets/img/elements/19.jpg')}}" alt="Card image cap" />
-              <div class="card-body">
-                <h5 class="card-title text-center">Card title</h5>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter">
-                  <span class="tf-icons bx bxs-cart-add me-1"></span>Order
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card h-60">
-              <img class="card-img-top" src="{{asset('assets/img/elements/20.jpg')}}" alt="Card image cap" />
-              <div class="card-body">
-                <h5 class="card-title text-center">Card title</h5>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter">
-                  <span class="tf-icons bx bxs-cart-add me-1"></span>Order
-                </button>
-              </div>
-            </div>
-          </div>
+          @endforeach
         </div>
-        <div class="pagination justify-content-end">
-          <!-- Basic Pagination -->
+        <div class="demo-inline-spacing">
           <nav aria-label="Page navigation">
-            <ul class="pagination">
-              <li class="page-item first">
-                <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevrons-left"></i></a>
-              </li>
-              <li class="page-item prev">
-                <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-left"></i></a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0);">1</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0);">2</a>
-              </li>
-              <li class="page-item active">
-                <a class="page-link" href="javascript:void(0);">3</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0);">4</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0);">5</a>
-              </li>
-              <li class="page-item next">
-                <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-right"></i></a>
-              </li>
-              <li class="page-item last">
-                <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevrons-right"></i></a>
-              </li>
-            </ul>
+             <ul class="pagination justify-content-end">
+                <!-- Previous Page Link -->
+                <li class="page-item {{ ($productCoffee->onFirstPage()) ? 'disabled' : '' }}">
+                    <a class="page-link" href="{{ $productCoffee->previousPageUrl() }}" tabindex="-1">
+                        <i class="tf-icon bx bx-chevron-left"></i>
+                    </a>
+                </li>
+
+                <!-- Page Numbers -->
+                @foreach ($productCoffee->getUrlRange(1, $productCoffee->lastPage()) as $page => $url)
+                    <li class="page-item {{ ($productCoffee->currentPage() == $page) ? 'active' : '' }}">
+                        <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                    </li>
+                @endforeach
+
+                <!-- Next Page Link -->
+                <li class="page-item {{ ($productCoffee->hasMorePages()) ? '' : 'disabled' }}">
+                    <a class="page-link" href="{{ $productCoffee->nextPageUrl() }}">
+                        <i class="tf-icon bx bx-chevron-right"></i>
+                    </a>
+                </li>
+             </ul>
           </nav>
-          <!--/ Basic Pagination -->
-        </div>
+       </div>
       </div>
 
       <div class="tab-pane fade" id="navs-pills-top-profile" role="tabpanel">
@@ -149,108 +91,49 @@
           </div>
         </div>
         <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
+          @foreach ($productIcedCoffee as $item)
           <div class="col">
             <div class="card h-60">
-              <img class="card-img-top" src="{{asset('assets/img/elements/2.jpg')}}" alt="Card image cap" />
+              <img class="card-img-top" src="{{asset($item->picture)}}" alt="Card image cap" style="width: 100%; height: auto;"/>
               <div class="card-body">
-                <h5 class="card-title text-center">Card title</h5>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter">
+                <h5 class="card-title text-center">{{$item->name}}</h5>
+                <div class="mb-2 text-center">
+                  <span>&#8369;{{ number_format( $item->price,2)}}</span>
+                </div>
+                <button type="button" class="btn btn-primary menu-btn" id="menu-btn" data-bs-toggle="modal" data-bs-target="#modalCenter" data-id="{{ $item->id }}" data-name="{{ $item->name }}"  data-price="{{ $item->price }}" data-picture="{{ $item->picture }}"  >
                   <span class="tf-icons bx bxs-cart-add me-1"></span>Order
                 </button>
               </div>
             </div>
           </div>
-          <div class="col">
-            <div class="card h-60">
-              <img class="card-img-top" src="{{asset('assets/img/elements/13.jpg')}}" alt="Card image cap" />
-              <div class="card-body">
-                <h5 class="card-title text-center">Card title</h5>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter">
-                  <span class="tf-icons bx bxs-cart-add me-1"></span>Order
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card h-60">
-              <img class="card-img-top" src="{{asset('assets/img/elements/4.jpg')}}" alt="Card image cap" />
-              <div class="card-body">
-                <h5 class="card-title text-center">Card title</h5>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter">
-                  <span class="tf-icons bx bxs-cart-add me-1"></span>Order
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card h-60">
-              <img class="card-img-top" src="{{asset('assets/img/elements/18.jpg')}}" alt="Card image cap" />
-              <div class="card-body">
-                <h5 class="card-title text-center">Card title</h5>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter">
-                  <span class="tf-icons bx bxs-cart-add me-1"></span>Order
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card h-60">
-              <img class="card-img-top" src="{{asset('assets/img/elements/19.jpg')}}" alt="Card image cap" />
-              <div class="card-body">
-                <h5 class="card-title text-center">Card title</h5>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter">
-                  <span class="tf-icons bx bxs-cart-add me-1"></span>Order
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card h-60">
-              <img class="card-img-top" src="{{asset('assets/img/elements/20.jpg')}}" alt="Card image cap" />
-              <div class="card-body">
-                <h5 class="card-title text-center">Card title</h5>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter">
-                  <span class="tf-icons bx bxs-cart-add me-1"></span>Order
-                </button>
-              </div>
-            </div>
-          </div>
+          @endforeach
         </div>
-        <div class="pagination justify-content-end">
-          <!-- Basic Pagination -->
+        <div class="demo-inline-spacing">
           <nav aria-label="Page navigation">
-            <ul class="pagination">
-              <li class="page-item first">
-                <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevrons-left"></i></a>
-              </li>
-              <li class="page-item prev">
-                <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-left"></i></a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0);">1</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0);">2</a>
-              </li>
-              <li class="page-item active">
-                <a class="page-link" href="javascript:void(0);">3</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0);">4</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0);">5</a>
-              </li>
-              <li class="page-item next">
-                <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-right"></i></a>
-              </li>
-              <li class="page-item last">
-                <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevrons-right"></i></a>
-              </li>
-            </ul>
+             <ul class="pagination justify-content-end">
+                <!-- Previous Page Link -->
+                <li class="page-item {{ ($productIcedCoffee->onFirstPage()) ? 'disabled' : '' }}">
+                    <a class="page-link" href="{{ $productIcedCoffee->previousPageUrl() }}" tabindex="-1">
+                        <i class="tf-icon bx bx-chevron-left"></i>
+                    </a>
+                </li>
+
+                <!-- Page Numbers -->
+                @foreach ($productIcedCoffee->getUrlRange(1, $productIcedCoffee->lastPage()) as $page => $url)
+                    <li class="page-item {{ ($productIcedCoffee->currentPage() == $page) ? 'active' : '' }}">
+                        <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                    </li>
+                @endforeach
+
+                <!-- Next Page Link -->
+                <li class="page-item {{ ($productIcedCoffee->hasMorePages()) ? '' : 'disabled' }}">
+                    <a class="page-link" href="{{ $productIcedCoffee->nextPageUrl() }}">
+                        <i class="tf-icon bx bx-chevron-right"></i>
+                    </a>
+                </li>
+             </ul>
           </nav>
-          <!--/ Basic Pagination -->
-        </div>
+       </div>
       </div>
       <div class="tab-pane fade" id="navs-pills-top-messages" role="tabpanel">
         <div class="navbar-nav align-items-left py-md-3">
@@ -260,108 +143,49 @@
           </div>
         </div>
         <div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
+          @foreach ($productCake as $item)
           <div class="col">
             <div class="card h-60">
-              <img class="card-img-top" src="{{asset('assets/img/elements/2.jpg')}}" alt="Card image cap" />
+              <img class="card-img-top" src="{{asset($item->picture)}}" alt="product" style="width: 100%; height: auto;" />
               <div class="card-body">
-                <h5 class="card-title text-center">Card title</h5>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter">
+                <h5 class="card-title text-center">{{$item->name}}</h5>
+                <div class="mb-2 text-center">
+                  <span>&#8369; {{ number_format( $item->price,2)}}</span>
+                </div>
+                <button type="button" class="btn btn-primary menu-btn" id="menu-btn" data-bs-toggle="modal" data-bs-target="#modalCenter"  data-id="{{ $item->id }}" data-name="{{ $item->name }}"  data-price="{{ $item->price }}" data-picture="{{ $item->picture }}">
                   <span class="tf-icons bx bxs-cart-add me-1"></span>Order
                 </button>
               </div>
             </div>
           </div>
-          <div class="col">
-            <div class="card h-60">
-              <img class="card-img-top" src="{{asset('assets/img/elements/13.jpg')}}" alt="Card image cap" />
-              <div class="card-body">
-                <h5 class="card-title text-center">Card title</h5>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter">
-                  <span class="tf-icons bx bxs-cart-add me-1"></span>Order
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card h-60">
-              <img class="card-img-top" src="{{asset('assets/img/elements/4.jpg')}}" alt="Card image cap" />
-              <div class="card-body">
-                <h5 class="card-title text-center">Card title</h5>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter">
-                  <span class="tf-icons bx bxs-cart-add me-1"></span>Order
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card h-60">
-              <img class="card-img-top" src="{{asset('assets/img/elements/18.jpg')}}" alt="Card image cap" />
-              <div class="card-body">
-                <h5 class="card-title text-center">Card title</h5>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter">
-                  <span class="tf-icons bx bxs-cart-add me-1"></span>Order
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card h-60">
-              <img class="card-img-top" src="{{asset('assets/img/elements/19.jpg')}}" alt="Card image cap" />
-              <div class="card-body">
-                <h5 class="card-title text-center">Card title</h5>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter">
-                  <span class="tf-icons bx bxs-cart-add me-1"></span>Order
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card h-60">
-              <img class="card-img-top" src="{{asset('assets/img/elements/20.jpg')}}" alt="Card image cap" />
-              <div class="card-body">
-                <h5 class="card-title text-center">Card title</h5>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalCenter">
-                  <span class="tf-icons bx bxs-cart-add me-1"></span>Order
-                </button>
-              </div>
-            </div>
-          </div>
+          @endforeach
         </div>
-        <div class="pagination justify-content-end">
-          <!-- Basic Pagination -->
+        <div class="demo-inline-spacing">
           <nav aria-label="Page navigation">
-            <ul class="pagination">
-              <li class="page-item first">
-                <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevrons-left"></i></a>
-              </li>
-              <li class="page-item prev">
-                <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-left"></i></a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0);">1</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0);">2</a>
-              </li>
-              <li class="page-item active">
-                <a class="page-link" href="javascript:void(0);">3</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0);">4</a>
-              </li>
-              <li class="page-item">
-                <a class="page-link" href="javascript:void(0);">5</a>
-              </li>
-              <li class="page-item next">
-                <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevron-right"></i></a>
-              </li>
-              <li class="page-item last">
-                <a class="page-link" href="javascript:void(0);"><i class="tf-icon bx bx-chevrons-right"></i></a>
-              </li>
-            </ul>
+             <ul class="pagination justify-content-end">
+                <!-- Previous Page Link -->
+                <li class="page-item {{ ($productCake->onFirstPage()) ? 'disabled' : '' }}">
+                    <a class="page-link" href="{{ $productCake->previousPageUrl() }}" tabindex="-1">
+                        <i class="tf-icon bx bx-chevron-left"></i>
+                    </a>
+                </li>
+
+                <!-- Page Numbers -->
+                @foreach ($productCake->getUrlRange(1, $productCake->lastPage()) as $page => $url)
+                    <li class="page-item {{ ($productCake->currentPage() == $page) ? 'active' : '' }}">
+                        <a class="page-link" href="{{ $url }}">{{ $page }}</a>
+                    </li>
+                @endforeach
+
+                <!-- Next Page Link -->
+                <li class="page-item {{ ($productCake->hasMorePages()) ? '' : 'disabled' }}">
+                    <a class="page-link" href="{{ $productCake->nextPageUrl() }}">
+                        <i class="tf-icon bx bx-chevron-right"></i>
+                    </a>
+                </li>
+             </ul>
           </nav>
-          <!--/ Basic Pagination -->
-        </div>
+       </div>
       </div>
     </div>
   </div>
@@ -371,27 +195,12 @@
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="modalCenterTitle">Product NAME</h5>
+        <h5 class="modal-title" ><span id="productName"></span></h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
         <div class="card-body">
-          <img class="img-fluid d-flex mx-auto my-4 rounded" src="{{asset('assets/img/elements/4.jpg')}}" alt="Card image cap" style="object-fit: cover; height: 400px;" />
-          <div class="d-flex justify-content-left" style="margin-left: 50px; margin-bottom: 15px;">
-            <nav aria-label="Page navigation">
-              <ul class="pagination">
-                <li class="page-item active">
-                  <input type="button" value="S" class="page-link">
-                </li>
-                <li class="page-item">
-                  <input type="button" value="M" class="page-link">
-                </li>
-                <li class="page-item">
-                  <input type="button" value="L" class="page-link">
-                </li>
-              </ul>
-            </nav>
-          </div>
+          <img class="img-fluid d-flex mx-auto my-4 rounded" alt="Card image cap" style="object-fit: cover; height: 400px;" id="productPicture" />
           <div class="col-xl-6 d-flex mx-auto">
             <div class="input-group number-spinner">
               <button class="btn btn-primary" data-dir="dwn">
@@ -407,28 +216,15 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">
-          <span class="tf-icons bx bxs-cart-add me-1"></span>Add to Cart
-        </button>
+        <form id="addtoCart" action="{{ route('store-add-cart') }}" method="post">
+          @csrf
+          <input type="hidden" id="productId" name="productId">
+          <input type="hidden" id="productQuantity" name="productQuantity">
+          <input type="submit" class="btn btn-primary" value="Add to Cart">
+        </form>
       </div>
     </div>
   </div>
 </div>
 @endsection
 <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
-<script>
-  $(document).ready(function() {
-    $(document).on('click', '.number-spinner button', function () {
-      var btn = $(this),
-          oldValue = btn.closest('.number-spinner').find('input').val().trim(),
-          newVal = 0;
-
-      if (btn.attr('data-dir') == 'up') {
-        newVal = parseInt(oldValue) + 1;
-      } else {
-        newVal = Math.max(parseInt(oldValue) - 1, 1); // Ensure value does not go below 1
-      }
-      btn.closest('.number-spinner').find('input').val(newVal);
-    });
-  });
-</script>

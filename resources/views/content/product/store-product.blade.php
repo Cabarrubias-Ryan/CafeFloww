@@ -46,7 +46,6 @@
                     <th>Supplier</th>
                     <th>Product Code</th>
                     <th>Status</th>
-                    <th>Details</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -57,13 +56,17 @@
                     <td>{{$coffee->fullname}}</td>
                     <td>{{ $coffee->product_code}}</td>
                     <td><span class="badge bg-label-primary me-1">Active</span></td>
-                    <td><i class="bx bx-detail bx-sm text-dark me-3"></td>
                     <td>
                       <div class="dropdown">
                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
                         <div class="dropdown-menu">
-                          <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                          <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
+                          <button class="dropdown-item edit-btn" id="editBtn" data-bs-toggle="modal" data-bs-target="#editProduct"
+                          data-id="{{$coffee->id}}" data-name="{{ $coffee->name}}" data-code="{{$coffee->product_code}}" data-price="{{ $coffee->price}}" data-description="{{ $coffee->description}}" data-category="{{ $coffee->category}}" data-picture="{{ $coffee->picture}}">
+                            <i class="bx bx-edit-alt me-1"></i> Edit
+                          </button>
+                          <form id class="d-inline"  >
+                            <button type="button" class="dropdown-item delete-person" onclick="confirmDelete({{$coffee->id}})"><i class="bx bx-trash me-1"></i> Delete</button>
+                          </form>
                         </div>
                       </div>
                     </td>
@@ -115,7 +118,6 @@
                   <th>Supplier</th>
                   <th>Product Code</th>
                   <th>Status</th>
-                  <th>Details</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -126,13 +128,18 @@
                   <td>{{ $icedCoffe->fullname }}</td>
                   <td>{{ $icedCoffe->product_code }}</td>
                   <td><span class="badge bg-label-primary me-1">Active</span></td>
-                  <td><i class="bx bx-detail bx-sm text-dark me-3"></td>
                   <td>
                     <div class="dropdown">
                       <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
                       <div class="dropdown-menu">
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
+                        <button class="dropdown-item edit-btn" id="editBtn" data-bs-toggle="modal" data-bs-target="#editProduct"
+                          data-id="{{$icedCoffe->id}}" data-name="{{ $icedCoffe->name}}" data-code="{{$icedCoffe->product_code}}" data-price="{{ $icedCoffe->price}}" data-description="{{ $icedCoffe->description}}" data-category="{{ $icedCoffe->category}}" data-picture="{{ $icedCoffe->picture}}">
+                          <i class="bx bx-edit-alt me-1"></i> Edit
+                        </button>
+                        <form method="POST" class="d-inline"  >
+                          @csrf
+                          <button type="button" class="dropdown-item delete-person" onclick="confirmDelete({{ $icedCoffe->id}})"><i class="bx bx-trash me-1"></i> Delete</button>
+                        </form>
                       </div>
                     </div>
                   </td>
@@ -183,7 +190,6 @@
                   <th>Supplier</th>
                   <th>Product Code</th>
                   <th>Status</th>
-                  <th>Details</th>
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -194,13 +200,18 @@
                     <td>{{ $cake->fullname}}</td>
                     <td>{{ $cake->product_code}}</td>
                     <td><span class="badge bg-label-primary me-1">Active</span></td>
-                    <td><i class="bx bx-detail bx-sm text-dark me-3"></td>
                     <td>
                       <div class="dropdown">
                         <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
                         <div class="dropdown-menu">
-                          <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                          <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
+                          <button class="dropdown-item edit-btn" id="editBtn" data-bs-toggle="modal" data-bs-target="#editProduct"
+                            data-id="{{$cake->id}}" data-name="{{ $cake->name}}" data-code="{{$cake->product_code}}" data-price="{{ $cake->price}}" data-description="{{ $cake->description}}" data-category="{{ $cake->category}}" data-picture="{{ $cake->picture}}">
+                            <i class="bx bx-edit-alt me-1"></i> Edit
+                          </button>
+                          <form action="" method="POST" class="d-inline"  >
+                            @csrf
+                            <button type="button" class="dropdown-item delete-person" onclick="confirmDelete({{ $cake->id}})"><i class="bx bx-trash me-1"></i> Delete</button>
+                          </form>
                         </div>
                       </div>
                     </td>
@@ -315,6 +326,71 @@
     </form>
   </div>
 </div>
-
 <!--/ Card layout -->
+
+<div class="modal fade" id="editProduct" data-bs-backdrop="static" tabindex="-1">
+  <div class="modal-dialog">
+    <form class="modal-content" id="Edit_productForm">
+      @csrf
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <h5 class="modal-title text-center" id="backDropModalTitle">Product</h5>
+        <div class="row">
+          <div class="col mb-3">
+            <div class="mb-4 d-flex justify-content-center">
+                <img id="Edit_selectedImage"
+                alt="example placeholder" style="width: 300px;" />
+            </div>
+            <div class="d-flex justify-content-center">
+                <div data-mdb-ripple-init class="btn btn-primary btn-rounded">
+                    <label class="form-label text-white m-1" for="customFile1">Choose file</label>
+                    <input type="file" name="edit_picture" class="form-control d-none" id="customFile1" onchange="displaySelectedImage(event, 'Edit_selectedImage')" />
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col mb-3">
+            <label for="product" class="form-label">Product Name</label>
+            <input type="hidden" id="Edit_product_id" name="edit_id" class="form-control">
+            <input type="text" id="Edit_product" name="edit_product" class="form-control" placeholder="Enter Name">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col mb-3">
+            <label for="product" class="form-label">Category</label>
+            <select name="edit_category" class="form-control" id="Edit_category">
+              <option value="" selected disabled>--Select category--</option>
+              <option value="Cake">Cake</option>
+              <option value="Iced Coffee">Iced Coffee</option>
+              <option value="Coffee">Coffee</option>
+            </select>
+          </div>
+        </div>
+        <div class="row g-2 pt-2">
+          <div class="col mb-0">
+            <label for="productcode" class="form-label">Product code</label>
+            <input type="text" id="Edit_productcode" name="edit_productcode" class="form-control" placeholder="Enter Product Code">
+          </div>
+          <div class="col mb-0">
+            <label for="price" class="form-label">Price</label>
+            <input type="number" placeholder="Enter price" id="Edit_price" name="edit_price" class="form-control">
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea name="edit_description" id="Edit_description" class="form-control" rows="4" placeholder="Say it"></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" id="editProductBtn" class="btn btn-primary">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
 @endsection

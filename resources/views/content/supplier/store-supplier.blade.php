@@ -47,8 +47,13 @@
                 <div class="dropdown">
                   <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
                   <div class="dropdown-menu">
-                    <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                    <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
+                    <button class="dropdown-item edit-btn" id="edit-btn" data-bs-toggle="modal" data-bs-target="#EditModal" data-id="{{ $data->id }}" data-name="{{ $data->name }}" data-phone="{{ $data->phone }}" data-address="{{ $data->address }}" data-description="{{ $data->description }}">
+                      <i class="bx bx-edit-alt me-1"></i> Edit
+                    </button>
+                    <form class="d-inline">
+                      @csrf
+                      <button type="button" class="dropdown-item delete-person" onclick="confirmDelete({{ $data->id}})"><i class="bx bx-trash me-1"></i> Delete</button>
+                    </form>
                   </div>
                 </div>
               </td>
@@ -87,6 +92,8 @@
     </div>
   </div>
 </div>
+
+{{-- Insert Modal --}}
 <div class="modal fade" id="backDropModal" data-bs-backdrop="static" tabindex="-1">
   <div class="modal-dialog">
     <form class="modal-content" id="supplierForm">
@@ -130,5 +137,52 @@
     </form>
   </div>
 </div>
+{{-- Edit Modal --}}
+
+<div class="modal fade" id="EditModal" data-bs-backdrop="static" tabindex="-1">
+  <div class="modal-dialog">
+    <form class="modal-content" id="editSupplierForm">
+      @csrf
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <h5 class="modal-title text-center" id="backDropModalTitle">Supplier</h5>
+      <div class="modal-body">
+        <div class="row">
+          <input type="hidden" id="Edit_supplier_id" name="Edit_supplier_id">
+          <div class="col mb-3">
+            <label for="supplier" class="form-label">Supplier Name</label>
+            <input type="text" id="Edit_supplier" name="Edit_supplier" class="form-control" placeholder="Enter supplier name">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col mb-3">
+            <label for="phonenumber" class="form-label">Phone Number</label>
+            <input type="text" id="Edit_phonenumber" name="Edit_phonenumber" class="form-control" placeholder="Enter phone number">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col mb-3">
+            <label for="address" class="form-label">Address</label>
+            <input type="text" name="Edit_address" id="Edit_address" class="form-control" placeholder="Enter address">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col mb-3">
+            <label for="description" class="form-label">Description</label>
+            <div class="input-group input-group-merge form-send-message">
+              <textarea class="form-control message-input" name="Edit_description" id="Edit_description" placeholder="Say it" rows="4"></textarea>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" id="editSaveBtn" class="btn btn-primary">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
 <!--/ Card layout -->
 @endsection

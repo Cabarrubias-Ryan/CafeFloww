@@ -37,7 +37,8 @@ $navbarDetached = ($navbarDetached ?? '');
         <div class="navbar-nav align-items-center">
           <div class="nav-item d-flex align-items-center">
             <a href="{{ route('store-cart')}}" type="button" class="btn btn-icon">
-              <span class="tf-icons bx bxs-cart-add"></span>
+              <span class="tf-icons bx bxs-cart-add m-4"></span>
+              <span id="cart-badge" class="badge rounded-pill bg-label-warning position-absolute top-0 start-20 translate-middle mt-3"></span>
             </a>
           </div>
         </div>
@@ -85,7 +86,7 @@ $navbarDetached = ($navbarDetached ?? '');
                 <div class="dropdown-divider"></div>
               </li>
               <li>
-                <a class="dropdown-item" href="javascript:void(0);">
+                <a class="dropdown-item" href="{{ route('auth-logout-account')}}">
                   <i class='bx bx-power-off me-2'></i>
                   <span class="align-middle">Log Out</span>
                 </a>

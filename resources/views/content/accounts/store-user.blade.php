@@ -72,12 +72,13 @@
                             <i class="bx bx-dots-vertical-rounded"></i>
                           </button>
                           <div class="dropdown-menu">
-                            <a class="dropdown-item edit-person" href="javascript:void(0);" data-id="${person.id}">
+                            <button class="dropdown-item edit-btn" id="edit-btn" data-bs-toggle="modal" data-bs-target="#EditModal"
+                            data-id="{{ $data->id }}" data-firstname="{{ $data->firstname }}" data-middlename="{{ $data->middlename }}" data-lastname="{{ $data->lastname }}" data-sex="{{ $data->sex }}" data-phone="{{ $data->phone_number}}" data-birthday="{{ $data->birthday}}" data-nationality="{{ $data->nationality}}" data-religion="{{ $data->religion}}">
                               <i class="bx bx-edit-alt me-1"></i> Edit
-                            </a>
-                            <a class="dropdown-item delete-person" href="javascript:void(0);" data-id="${person.id}">
-                              <i class="bx bx-trash me-1"></i> Delete
-                            </a>
+                            </button>
+                            <form class="d-inline"  >
+                              <button type="button" class="dropdown-item delete-person" onclick="confirmDeletePerson({{ $data->id}})"><i class="bx bx-trash me-1"></i> Delete</button>
+                            </form>
                           </div>
                         </div>
                       </td>
@@ -129,7 +130,7 @@
                   <th>Email</th>
                   <th>Account role</th>
                   <th>Employee Number</th>
-                  <th>Actions</th>
+                  <th class="text-center">Actions</th>
                 </tr>
               </thead>
               <tbody class="table-border-bottom-0">
@@ -139,12 +140,17 @@
                   <td>{{$item->email}}</td>
                   <td>{{$item->role}}</td>
                   <td>{{$item->employee_number}}</td>
-                  <td>
+                  <td class="text-center">
                     <div class="dropdown">
                       <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown"><i class="bx bx-dots-vertical-rounded"></i></button>
                       <div class="dropdown-menu">
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                        <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
+                        <button class="dropdown-item edit-Userbtn" id="edit-Userbtn" data-bs-toggle="modal" data-bs-target="#editUserModal"
+                          edata-id="{{ $item->id }}" data-username="{{ $item->username}}" data-email="{{ $item->email}}" data-role="{{ $item->role}}" data-accountholder="{{ $item->person_id}}" data-employee="{{ $item->employee_number}}">
+                          <i class="bx bx-edit-alt me-1"></i> Edit
+                        </button>
+                        <form class="d-inline">
+                          <button type="button" class="dropdown-item delete-person" onclick="confirmDeleteUser({{ $item->id}})"><i class="bx bx-trash me-1"></i> Delete</button>
+                        </form>
                       </div>
                     </div>
                   </td>
@@ -184,7 +190,7 @@
     </div>
   </div>
 </div>
-<!-- Account Details Modal -->
+<!-- Account Details  add Modal -->
 <div class="modal fade" id="detailsModal" data-bs-backdrop="static" tabindex="-1">
   <div class="modal-dialog">
     <form class="modal-content" id="detailsForm" method="post" action="{{ route('store-account.add')}}">
@@ -253,7 +259,7 @@
   </div>
 </div>
 
-<!-- Account User Modal -->
+<!-- Account User add Modal -->
 <div class="modal fade" id="userModal" data-bs-backdrop="static" tabindex="-1">
   <div class="modal-dialog">
     <form class="modal-content" id="userForm">
@@ -320,6 +326,137 @@
     </form>
   </div>
 </div>
+
+
+{{-- Edit person modal --}}
+<div class="modal fade" id="editModal" data-bs-backdrop="static" tabindex="-1">
+  <div class="modal-dialog">
+    <form class="modal-content" id="editPersonForm" >
+      @csrf
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <h5 class="modal-title text-center" id="detailsModalTitle">Personal Details</h5>
+      <div class="modal-body">
+        <input type="hidden" id="edit_id" name="edit_id">
+        <div class="row">
+          <div class="col mb-3">
+            <label for="firstname" class="form-label">First Name</label>
+            <input type="text" name="edit_firstname" id="edit_firstname" class="form-control" placeholder="Enter firstname">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col mb-3">
+            <label for="middlename" class="form-label">Middle Name</label>
+            <input type="text" name="edit_middlename" id="edit_middlename" class="form-control" placeholder="Enter middlename">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col mb-3">
+            <label for="lastname" class="form-label">Last Name</label>
+            <input type="text" name="edit_lastname" id="edit_lastname" class="form-control" placeholder="Enter lastname">
+          </div>
+        </div>
+        <div class="row g-2 pt-2">
+          <div class="col mb-0">
+            <label for="birthday" class="form-label">Birthday</label>
+            <input type="date" name="edit_birthday" id="edit_birthday" class="form-control">
+          </div>
+          <div class="col mb-0">
+            <label for="sex" class="form-label">Sex</label>
+            <select name="edit_sex" id="edit_sex" class="form-control">
+              <option value="" selected disabled>Select sex</option>
+              <option value="Male">Male</option>
+              <option value="Female">Female</option>
+            </select>
+          </div>
+        </div>
+        <div class="row pt-3">
+          <div class="col mb-3">
+            <label for="phonenumber" class="form-label">Phone Number</label>
+            <input type="text" name="edit_phonenumber" id="edit_phonenumber" class="form-control" placeholder="Enter phonenumber">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col mb-3">
+            <label for="nationality" class="form-label">Nationality</label>
+            <input type="text" name="edit_nationality" id="edit_nationality" class="form-control" placeholder="Enter nationality">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col mb-3">
+            <label for="religion" class="form-label">Religion</label>
+            <input type="text" name="edit_religion" id="edit_religion" class="form-control" placeholder="Enter religion">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="personEditBtn">Save</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+{{-- edit user modal --}}
+
+<div class="modal fade" id="EditUserModal" data-bs-backdrop="static" tabindex="-1">
+  <div class="modal-dialog">
+    <form class="modal-content" id="editUserForm">
+      @csrf
+      <div class="modal-header">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <h5 class="modal-title text-center" id="detailsModalTitle">Account Details</h5>
+      <div class="modal-body">
+        <input type="hidden" id="edit_Userid" name="edit_Userid">
+        <div class="row">
+          <div class="col mb-3">
+            <label for="username" class="form-label">Usename</label>
+            <input type="text" name="edit_username" id="edit_username" class="form-control" placeholder="Enter username">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col mb-3">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" name="edit_password" id="edit_password" class="form-control" placeholder="**********">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col mb-3">
+            <label for="password_confirmation" class="form-label">Retry Password</label>
+            <input type="password" name="edit_password_confirmation" id="edit_password_confirmation" class="form-control" placeholder="**********">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" id="edit_email" name="edit_email" class="form-control" placeholder="example@email.com">
+          </div>
+        </div>
+        <div class="row g-2 pt-2">
+          <div class="col mb-0">
+            <label for="role" class="form-label">Account Role</label>
+            <select name="edit_role" id="edit_role" class="form-control">
+              <option value="" selected disabled>--Select role--</option>
+              <option value="Admin">Admin</option>
+              <option value="Employee">Employee</option>
+            </select>
+          </div>
+          <div class="col mb-0">
+            <label for="employeenumber" class="form-label">Employee Number</label>
+            <input type="text" name="edit_employeenumber" id="edit_employeenumber" class="form-control" placeholder="Enter employee number">
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button>
+        <input type="submit" value="Save" class="btn btn-primary" id="UserEditBtn">
+      </div>
+    </form>
+  </div>
+</div>
+
 
 <!--/ Card layout -->
 @endsection

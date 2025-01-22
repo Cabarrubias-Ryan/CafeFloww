@@ -23,6 +23,7 @@ class StoreAccount extends Controller
       ->whereNotIn('person.id', function ($query) {
         $query->select('person_id')->from('users');
       })
+      ->whereNull('person.deleted_at')
       ->select('person.id', 'person.firstname', 'person.middlename', 'person.lastname')
       ->get();
 
@@ -54,6 +55,27 @@ class StoreAccount extends Controller
       return response()->json(['Error' => 0, 'Message' => 'Successfully added a data']);
     }
   }
+  public function editPersonalDetails(Request $request)
+  {
+    $id = $request->edit_id;
+    $data = [
+      'firstname' => $request->edit_firstname,
+      'middlename' => $request->edit_middlename,
+      'lastname' => $request->edit_lastname,
+      'birthday' => $request->edit_birthday,
+      'phone_number' => $request->edit_phonenumber,
+      'sex' => $request->edit_sex,
+      'nationality' => $request->edit_nationality,
+      'religion' => $request->edit_religion,
+      'updated_at' => date('Y-m-d H:i:s'),
+    ];
+
+    $person = Person::where('id', $id)->update($data);
+    if ($person) {
+      return response()->json(['Error' => 0, 'Message' => 'Successfully Updated the Data']);
+    }
+  }
+
   public function addUser(Request $request)
   {
     $data = [
@@ -69,5 +91,29 @@ class StoreAccount extends Controller
     if ($user) {
       return response()->json(['Error' => 0, 'Message' => 'Successfully added a user']);
     }
+  }
+
+  public function editUser(Request $request)
+  {
+    $id = $request->edit_Userid;
+    $data = [
+      'username' => $request->edit_username,
+      'password' => Hash::make($request->edit_password),
+      'role' => $request->edit_role,
+      'email' => $request->edit_email,
+      'employee_number' => $request->edit_employeenumber,
+      'updated_at' => date('Y-m-d H:i:s'),
+    ];
+
+    $user = User::where('id', $id)->update($data);
+    if ($user) {
+      return response()->json(['Error' => 0, 'Message' => 'Successfully Updated the Data']);
+    }
+  }
+  public function deleteUser(Request $request)
+  {
+  }
+  public function deletePerson(Request $request)
+  {
   }
 }

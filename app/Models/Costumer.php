@@ -9,5 +9,5 @@ class Costumer extends Model
 {
   use SoftDeletes;
   protected $table = 'costumer';
-  protected $fillable = ['id', 'costumer_code'];
+  protected $fillable = ['id', 'costumer_code', 'created_at', 'updated_at', 'deleted_at'];
 }

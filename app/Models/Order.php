@@ -11,10 +11,11 @@ class Order extends Model
   protected $table = 'order';
   protected $fillable = [
     'id',
-    'user_id',
-    'product_id',
     'costumer_id',
+    'cart_id',
     'quantity',
+    'date',
+    'discount',
     'created_at',
     'updated_at',
     'deleted_at',

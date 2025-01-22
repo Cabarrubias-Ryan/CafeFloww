@@ -7,12 +7,6 @@
       "url": "admin/menu"
     },
     {
-      "name": "Inventory",
-      "icon": "menu-icon tf-icons bx bx-notepad",
-      "slug": "store-inventory",
-      "url": "admin/inventory"
-    },
-    {
       "name": "Sales",
       "icon": "menu-icon tf-icons bx bx-money-withdraw",
       "slug": "store-sales",

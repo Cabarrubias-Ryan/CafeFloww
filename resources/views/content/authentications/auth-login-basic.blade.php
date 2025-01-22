@@ -22,10 +22,22 @@
             </a>
           </div>
           <!-- /Logo -->
-          <form id="formAuthentication" class="mb-3" action="{{url('/')}}" method="GET">
+          <form id="formAuthentication" class="mb-3" action="{{ route('auth-login-account') }}" method="post">
+            @csrf
+            @if ($errors->any())
+              <div class="row">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                    <div class="alert alert-danger" role="alert">
+                      {{ $error }}
+                    </div>
+                    @endforeach
+                </ul>
+              </div>
+            @endif
             <div class="mb-3">
               <label for="email" class="form-label">Email or Username</label>
-              <input type="text" class="form-control" id="email" name="email-username" placeholder="Enter your email or username" autofocus>
+              <input type="text" class="form-control" id="username" name="username" placeholder="Enter your email or username" autofocus>
             </div>
             <div class="mb-3 form-password-toggle">
               <div>
