@@ -1,0 +1,16 @@
+{
+  "menu": [
+    {
+      "name": "Analitics",
+      "icon": "menu-icon tf-icons bx bx bx-cube-alt",
+      "slug": "dashboard-analytics",
+      "url": "admin/analytics"
+    },
+    {
+      "name": "Accounts",
+      "icon": "menu-icon tf-icons bx bx bx-user",
+      "slug": "store-account",
+      "url": "admin/accounts"
+    }
+  ]
+}

@@ -17,8 +17,7 @@
           <!-- Logo -->
           <div class="app-brand justify-content-center">
             <a href="{{url('/')}}" class="app-brand-link gap-2">
-              <span class="app-brand-logo demo">@include('_partials.macros',["width"=>25,"withbg"=>'var(--bs-primary)'])</span>
-              <span class="app-brand-text demo text-body fw-bold">{{config('variables.templateName')}}</span>
+              <span class="brand-name display-5 bold">CofeFlow</span>
             </a>
           </div>
           <!-- /Logo -->
@@ -37,7 +36,7 @@
             @endif
             <div class="mb-3">
               <label for="email" class="form-label">Email or Username</label>
-              <input type="text" class="form-control" id="username" name="username" placeholder="Enter your email or username" autofocus>
+              <input type="text" class="form-control" id="username" name="username" autofocus>
             </div>
             <div class="mb-3 form-password-toggle">
               <div>

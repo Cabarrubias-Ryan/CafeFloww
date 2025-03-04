@@ -41,7 +41,7 @@
           @foreach ($productCoffee as $item)
           <div class="col">
             <div class="card h-60">
-              <img class="card-img-top" src="{{$item->picture}}" alt="Card image cap" style="width: 100%; height: auto;"/>
+              <img class="card-img-top" src="{{ $item->picture}}" alt="Card image cap" style="width: 100%; height: auto;"/>
               <div class="card-body">
                 <h5 class="card-title text-center">{{$item->name}}</h5>
                 <div class="mb-2 text-center">

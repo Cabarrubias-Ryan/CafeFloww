@@ -17,19 +17,11 @@
   display: flex;
   align-items: center;
 }
-.app-brand-logo {
-  display: block;
-  flex-grow: 0;
-  flex-shrink: 0;
-  overflow: hidden;
-  min-height: 1px;
-
-  img,
-  svg {
-    display: block;
-  }
+.brand-name {
+  font-family: 'Courier New', Courier, monospace;
+  font-style: normal;
+  font-weight: bolder;
 }
-
 .app-brand-text {
   flex-shrink: 0;
   opacity: 1;

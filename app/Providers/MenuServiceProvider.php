@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Session;
 
 class MenuServiceProvider extends ServiceProvider
 {
@@ -19,10 +21,20 @@ class MenuServiceProvider extends ServiceProvider
    */
   public function boot(): void
   {
-    $verticalMenuJson = file_get_contents(base_path('resources/menu/verticalMenu.json'));
-    $verticalMenuData = json_decode($verticalMenuJson);
+    $role = Session::get('role'); // Ensure the role is set during login
 
-    // Share all menuData to all the views
-    \View::share('menuData', [$verticalMenuData]);
+    // Determine which menu to load based on the role
+    if ($role === 'Admin') {
+      $menuFile = 'verticalMenuAdmin.json';
+    } else {
+      $menuFile = 'verticalMenu.json';
+    }
+
+    // Load the appropriate menu file
+    $menuJson = file_get_contents(base_path("resources/menu/{$menuFile}"));
+    $menuData = json_decode($menuJson);
+
+    // Share the menu data with all views
+    \View::share('menuData', [$menuData]);
   }
 }
